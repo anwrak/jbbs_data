@@ -3,9 +3,11 @@ Afghanistan,Asia
 American Samoa,Oceania
 Aruba,Caribbean
 At Sea,North America
+Atlantic Ocean,North America
 Australia,Oceania
 Austria,Europe
 Bahamas,Caribbean
+Bohemia,Europe
 Bartovia,North America
 Belgium,Europe
 Belize,Central America
@@ -18,6 +20,7 @@ Curacao,Caribbean
 Czech Republic,Europe
 D.R.,Caribbean
 Denmark,Europe
+England,Europe
 Finland,Europe
 France,Europe
 Germany,Europe
@@ -54,6 +57,8 @@ Switzerland,Europe
 Taiwan,Asia
 United Kingdom,Europe
 USA,North America
+Ukraine,Europe
+Unknown,Unknown
 V.I.,Caribbean
 Venezuela,South America
 Viet Nam,Asia
