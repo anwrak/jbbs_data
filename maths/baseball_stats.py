@@ -18,6 +18,7 @@ class basic_hitting:
         self.sh = stats['sh']
         self.sf = stats['sf']
         self.gidp = stats['gidp']
+        #calculate the easy ones that don't require division
         self.pa = stats['ab'] + stats['bb'] + stats['hbp'] + stats['sf'] + stats['sh']
         self.rp = stats['r'] + stats['rbi'] - stats['hr']
         self.b1 = stats['h'] - stats['b2'] - stats['b3'] - stats['hr']
