@@ -102,6 +102,7 @@ class BasicHitting:
     @staticmethod
     #runs created
     def calc_rc(df):
+        #BUG: This whole function is fucked up
         TOP = (df['H'] + df['BB']) * BasicHitting.calc
         BTM = 9 * C
         return np.where(BTM > 0, (TOP / BTM) * (0.9 * C), 0)
