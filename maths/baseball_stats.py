@@ -1,4 +1,62 @@
-class basic_hitting:
+class BasicHitting:
+    @staticmethod
+    def calc_br(df):
+        a = df["h"] + df["bb"] + df["hbp"] + (df["ibb"] * 0.5) - df["hr"]
+        b = ((1.4 * df["tb"]) - (0.6 * df["h"]) - (3 * df["hr"]) +
+             (0.1 * (df["bb"] + df["hbp"] - df["ibb"])) +
+             (0.9 * (df["sb"] - df["cs"] - df["gidp"]))) * 1.1
+        c = df["ab"] - df["h"] + df["cs"] + df["gidp"]
+        d = df["hr"]
+        return np.where(a + b > 0, np.round(((a * b) / (b + c)) + d, 3), np.nan)
+
+    @staticmethod
+    def calc_ba(df):
+        return np.where(df["ab"] > 0, np.round(df["h"] / df["ab"], 3), np.nan)
+
+    @staticmethod
+    def calc_obp(df):
+        return np.where(df["pa"] > 0, np.round((df["h"] + df["bb"] + df["hbp"]) / df["pa"], 3), np.nan)
+
+    @staticmethod
+    def calc_slg(df):
+        return np.where(df["ab"] > 0, np.round(df["tb"] / df["ab"], 3), np.nan)
+
+    @staticmethod
+    def calc_ops(df):
+        return BasicHitting.calc_obp(df) + BasicHitting.calc_slg(df)
+
+    @staticmethod
+    def calc_iso(df):
+        return BasicHitting.calc_slg(df) - BasicHitting.calc_ba(df)
+
+    @staticmethod
+    def calc_gpa(df):
+        return np.where(BasicHitting.calc_slg(df) > 0,
+                        ((BasicHitting.calc_obp(df) * 1.8) + BasicHitting.calc_slg(df)) / 4,
+                        np.nan)
+
+    @staticmethod
+    def calc_rc(df):
+        a = df["h"] + df["bb"] - df["cs"] + df["hbp"] - df["gidp"]
+        b = (1.25 * df["b1"]) + (1.69 * df["b2"]) + (3.02 * df["b3"]) + (3.73 * df["hr"]) + \
+            (0.29 * (df["bb"] - df["ibb"] + df["hbp"])) + \
+            (0.492 * (df["sh"] + df["sf"] + df["sb"])) - (0.04 * df["k"])
+        c = df["pa"] * 9
+        top = ((2.4 * c) + a) * ((3 * c) + b)
+        btm = 9 * c
+        return np.where(btm > 0, (top / btm) * (0.9 * c), 0)
+
+    @staticmethod
+    def calc_sbp(df):
+        return np.where(df["sba"] > 0, df["sb"] / df["sba"], np.nan)
+
+    @staticmethod
+    def calc_ta(df):
+        t = df["tb"] + df["hbp"] + df["bb"] + df["sb"]
+        b = df["ab"] - df["h"] + df["cs"] + df["gidp"]
+        return np.where(b > 0, t / b, np.nan)
+
+class basic_hitting_old:
     def __init__(self, stats):
         #store provided stats 
         self.g = stats['g']
