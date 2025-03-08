@@ -93,6 +93,14 @@ class BasicHitting:
     #isolated power
     def calc_iso(df):
         return BasicHitting.calc_slg(df) - BasicHitting.calc_ba(df)
+    
+    @staticmethod
+    #plate apperance per strikeout
+    def calc_paso(df):
+        return np.where(df['SO'] > 0, np.round(df['PA'] / df['SO'], 3), np.nan)
+    
+    def calc_bbk(df):
+        return np.where(df['SO'] > 0, np.round(df['BB'] / df['SO'], 3), np.nan) 
 
     @staticmethod
     #gross production average
@@ -102,6 +110,8 @@ class BasicHitting:
     @staticmethod
     #runs created
     def calc_rc(df):
+        A = df['H'] + df['BB'] - df['CS'] + df['HBP'] - df['GIDP']
+        B = (1.25 * BasicHitting.calc_b1(df)) + (1.69 * df['B2']) + (3.02 * df['B3']) + (3.73 * df['HR'])
         #BUG: This whole function is fucked up
         TOP = (df['H'] + df['BB']) * BasicHitting.calc
         BTM = 9 * C
