@@ -34,7 +34,7 @@ class BasicHitting:
     @staticmethod
     #extra base hit percentage
     def calc_xbh_pct(df):
-        return np.where(df['H'] > 0 , np.round(BasicHitting.scalc_xbh(df) / df['H'], 3), np.nan)
+        return np.where(df['H'] > 0 , np.round(BasicHitting.calc_xbh(df) / df['H'], 3), np.nan)
 
     @staticmethod
     #times on base
