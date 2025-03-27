@@ -17,7 +17,7 @@ class BasicHitting:
         return BasicHitting.calc_b1(df) + (df['B2'] * 2) + (df['B3'] * 3) + (df['HR'] * 4)
     
     @staticmethod
-    #runs created
+    #runs produced
     def calc_rp(df):
         return df['R'] + df['RBI'] - df['HR']
     
@@ -110,12 +110,14 @@ class BasicHitting:
     @staticmethod
     #runs created
     def calc_rc(df):
+
         A = df['H'] + df['BB'] - df['CS'] + df['HBP'] - df['GIDP']
-        B = (1.25 * BasicHitting.calc_b1(df)) + (1.69 * df['B2']) + (3.02 * df['B3']) + (3.73 * df['HR'])
-        #BUG: This whole function is fucked up
-        TOP = (df['H'] + df['BB']) * BasicHitting.calc
-        BTM = 9 * C
-        return np.where(BTM > 0, (TOP / BTM) * (0.9 * C), 0)
+        B = (1.25 * BasicHitting.calc_b1(df)) + (1.69 * df['B2']) + (3.02 * df['B3']) + (3.73 * df['HR']) + (.29 * (df['BB'] - df['IBB'] + df['HBP'])) + (.492 * (df['SH'] + df['SF'] + df['SB'])) - (.04 * df['SO'])
+        C = df['AB'] + df['BB'] + df['HBP'] + df['SH'] + df['SF']
+
+        TOP = ((2.4*C + A) * (3*C + B))
+        
+        return np.where(C > 0, (TOP/(9*C)) - .9*C, 0)
 
     @staticmethod
     #stolen base percentage
