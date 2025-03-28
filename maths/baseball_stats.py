@@ -64,7 +64,7 @@ class BasicHitting:
     #batting average on balls in play
     def calc_babip(df):
         A = df['H'] - df['HR']
-        B = df['AB'] - df['SO'] - df['HR'] + df['SF']
+        B = df['AB'] - df['K'] - df['HR'] + df['SF']
         return np.where(B > 0, np.round(A / B, 3), np.nan)
     
     @staticmethod
@@ -102,10 +102,10 @@ class BasicHitting:
     @staticmethod
     #plate apperance per strikeout
     def calc_paso(df):
-        return np.where(df['SO'] > 0, np.round(df['PA'] / df['SO'], 3), np.nan)
+        return np.where(df['K'] > 0, np.round(df['PA'] / df['K'], 3), np.nan)
     
     def calc_bbk(df):
-        return np.where(df['SO'] > 0, np.round(df['BB'] / df['SO'], 3), np.nan) 
+        return np.where(df['K'] > 0, np.round(df['BB'] / df['K'], 3), np.nan) 
 
     @staticmethod
     #gross production average
@@ -117,7 +117,7 @@ class BasicHitting:
     def calc_rc(df):
 
         A = df['H'] + df['BB'] - df['CS'] + df['HBP'] - df['GiDP']
-        B = (1.25 * BasicHitting.calc_b1(df)) + (1.69 * df['B2']) + (3.02 * df['B3']) + (3.73 * df['HR']) + (.29 * (df['BB'] - df['IBB'] + df['HBP'])) + (.492 * (df['SH'] + df['SF'] + df['SB'])) - (.04 * df['SO'])
+        B = (1.25 * BasicHitting.calc_b1(df)) + (1.69 * df['B2']) + (3.02 * df['B3']) + (3.73 * df['HR']) + (.29 * (df['BB'] - df['IBB'] + df['HBP'])) + (.492 * (df['SH'] + df['SF'] + df['SB'])) - (.04 * df['K'])
         C = df['AB'] + df['BB'] + df['HBP'] + df['SH'] + df['SF']
 
         TOP = ((2.4*C + A) * (3*C + B))
