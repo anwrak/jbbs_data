@@ -44,12 +44,12 @@ class BasicHitting:
     @staticmethod
     #home runs per hit
     def calc_hrh(df):
-        return np.where(df['H'] > 0, np.round(df['HR'] / df['H']), np.nan)
+        return np.where(df['H'] > 0, np.round(df['HR'] / df['H'], 4), np.nan)
     
     @staticmethod
     #home runs per at bat
     def calc_hrab(df):
-        return np.where(df['AB'] > 0, np.round(df['HR'] / df['AB']), np.nan)
+        return np.where(df['AB'] > 0, np.round(df['HR'] / df['AB'], 4), np.nan)
 
     @staticmethod
     #base runs
