@@ -55,8 +55,8 @@ class BasicHitting:
     #base runs
     def calc_br(df):
         A = df['H'] + df['BB'] + df['HBP'] + (df['IBB'] * 0.5) - df['HR']
-        B = ((1.4 * df['TB']) - (0.6 * df['H']) - (3 * df['HR']) + (0.1 * (df['BB'] + df['HBP'] - df['IBB']))) + (0.9 * (df['SB'] - df['CS'] - df['GIDP'])) * 1.1
-        C = df['AB'] - df['H'] + df['CS'] + df['GIDP']
+        B = ((1.4 * df['TB']) - (0.6 * df['H']) - (3 * df['HR']) + (0.1 * (df['BB'] + df['HBP'] - df['IBB']))) + (0.9 * (df['SB'] - df['CS'] - df['GiDP'])) * 1.1
+        C = df['AB'] - df['H'] + df['CS'] + df['GiDP']
         D = df['HR']
         return np.where(A + B > 0, np.round(((A * B) / (B + C)) + D, 3), np.nan)
     
@@ -116,7 +116,7 @@ class BasicHitting:
     #runs created
     def calc_rc(df):
 
-        A = df['H'] + df['BB'] - df['CS'] + df['HBP'] - df['GIDP']
+        A = df['H'] + df['BB'] - df['CS'] + df['HBP'] - df['GiDP']
         B = (1.25 * BasicHitting.calc_b1(df)) + (1.69 * df['B2']) + (3.02 * df['B3']) + (3.73 * df['HR']) + (.29 * (df['BB'] - df['IBB'] + df['HBP'])) + (.492 * (df['SH'] + df['SF'] + df['SB'])) - (.04 * df['SO'])
         C = df['AB'] + df['BB'] + df['HBP'] + df['SH'] + df['SF']
 
@@ -133,5 +133,5 @@ class BasicHitting:
     #total average
     def calc_ta(df):
         T = df['TB'] + df['HBP'] + df['BB'] + df['SB']
-        B = df['AB'] - df['H'] + df['CS'] + df['GIDP']
+        B = df['AB'] - df['H'] + df['CS'] + df['GiDP']
         return np.where(B > 0, T / B, np.nan)
