@@ -1,6 +1,5 @@
-import numpy as np
-
 class BasicHitting:
+    
     @staticmethod
     #total bases
     def calc_pa(df):
@@ -135,3 +134,17 @@ class BasicHitting:
         T = df['TB'] + df['HBP'] + df['BB'] + df['SB']
         B = df['AB'] - df['H'] + df['CS'] + df['GiDP']
         return np.where(B > 0, T / B, np.nan)
+
+class BasicPitching:
+    
+    @staticmethod
+    def calc_ip(df):
+        return np.round(df['IP'] / 3, 3)
+    
+    @staticmethod
+    def calc_decisions(df):
+        return df['W'] + df['L']
+    
+    @staticmethod
+    def calc_no_decisions(df):
+        return df['G'] - BasicPitching.calc_decisions(df)
