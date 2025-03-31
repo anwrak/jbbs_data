@@ -374,7 +374,7 @@ class BasicFielding:
 
     #start percentage
     @staticmethod
-    def calc_sp(df):
+    def calc_gsp(df):
         return np.where(df['G'] > 0, np.round(df['GS'] / df['G'], 3), np.nan)
 
     #stolen base pct
@@ -400,7 +400,7 @@ class BasicFielding:
         df['Fp'] = BasicFielding.calc_fp(df)
         df['RF'] = BasicFielding.calc_rf(df)
         df['RF9'] = BasicFielding.calc_rf9(df)
-        df['Sp'] = BasicFielding.calc_sp(df)
+        df['GSp'] = BasicFielding.calc_gsp(df)
         df['SBp'] = BasicFielding.calc_sbp(df)
         
         return df
