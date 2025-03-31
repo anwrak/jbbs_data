@@ -136,6 +136,44 @@ class BasicHitting:
         T = df['TB'] + df['HBP'] + df['BB'] + df['SB']
         B = df['AB'] - df['H'] + df['CS'] + df['GiDP']
         return np.where(B > 0, T / B, np.nan)
+    
+    @staticmethod
+    #sum the calculated stats
+    def battingSums(df):
+
+        df['PA'] = BasicHitting.calc_pa(df)
+        df['B1'] = BasicHitting.calc_b1(df)
+        df['TB'] = BasicHitting.calc_tb(df)
+        df['SBA'] = BasicHitting.calc_sba(df)
+        df['XBH'] = BasicHitting.calc_xbh(df)
+        df['TOB'] = BasicHitting.calc_tob(df)
+        df['RP'] = BasicHitting.calc_rp(df)
+
+        return df
+    
+    @staticmethod
+    #calculate ratios and percentages
+    def battingRatios(df):
+
+        df['BA'] = BasicHitting.calc_ba(df).round(4)
+        df['HRAB'] = BasicHitting.calc_hrab(df).round(4)
+        df['HRH'] = BasicHitting.calc_hrh(df).round(4)
+        df['OBp'] = BasicHitting.calc_obp(df).round(4)
+        df['SLGp'] = BasicHitting.calc_slg(df).round(4)
+        df['OPS'] = BasicHitting.calc_ops(df).round(4)
+        df['XBHp'] = BasicHitting.calc_xbh_pct(df).round(4)
+        df['EqA'] = BasicHitting.calc_eqa(df).round(4)
+        df['ISO'] = BasicHitting.calc_iso(df).round(4)
+        df['GPA'] = BasicHitting.calc_gpa(df).round(4)
+        df['PASO'] = BasicHitting.calc_paso(df).round(4)
+        df['BBK'] = BasicHitting.calc_bbk(df).round(4)
+        df['RC'] = BasicHitting.calc_rc(df).round(4)
+        df['BR'] = BasicHitting.calc_br(df).round(4)
+        df['SBp'] = BasicHitting.calc_sbp(df).round(4)
+        df['TA'] = BasicHitting.calc_ta(df).round(4)
+        df['BABIP'] = BasicHitting.calc_babip(df).round(4)
+
+        return df
 
 class BasicPitching:
     
@@ -204,53 +242,65 @@ class BasicPitching:
         return np.where(df['G'] > 0, np.round(df['HR'] / df['G'], 3), np.nan)
     
     #runs allowed per game
+    @staticmethod
     def calc_rag(df):
         return np.where(df['G'] > 0, np.round(df['R'] / df['G'], 3), np.nan)
     
     #opposing batting average
+    @staticmethod
     def calc_oba(df):
         return np.where(BasicPitching.calc_pab(df) > 0, np.round( df['H'] / BasicPitching.calc_pab(df), 3), np.nan)
     
     #opposing batting average on balls in play
+    @staticmethod
     def calc_pbabip(df):
         A = df['H'] - df['HR']
         B = BasicPitching.calc_pab(df) - df['K'] - df['SF']
         return np.where(B > 0, np.round(A / B, 3), np.nan)
     
     #power finesse ration
+    @staticmethod
     def calc_pfr(df):
         A = df['K'] + df['BB']
         return np.where(df['IPO'] > 0, np.round(A / BasicPitching.calc_ip(df), 3), np.nan)
 
     #runs per 9 innings
+    @staticmethod
     def calc_r9(df):
         return np.where(df['IPO'] > 0, np.round(9 * (df['R'] / BasicPitching.calc_ip(df)), 3), np.nan)
     
     #walks per 9 innings
+    @staticmethod
     def calc_bb9(df):
         return np.where(df['IPO'] > 0, np.round(9 * (df['BB'] / BasicPitching.calc_ip(df)), 3), np.nan)
     
     #batters faced per 9 innings
+    @staticmethod
     def calc_bf9(df):
         return np.where(df['IPO'] > 0, np.round(9 * (df['BF'] / BasicPitching.calc_ip(df)), 3), np.nan)
     
     #walks and hits per innings pitched
+    @staticmethod
     def calc_whip(df):
         return np.where(df['IPO'] > 0, np.round((df['BB'] + df['H']) / BasicPitching.calc_ip(df), 3), np.nan)
     
     #win percentage
+    @staticmethod
     def calc_wp(df):
         return np.where(BasicPitching.calc_decisions(df) > 0, np.round(df['W']/BasicPitching.calc_decisions(df), 3), np.nan)
     
     #walk to strikout ratio
+    @staticmethod
     def calc_bbk(df):
         return np.where(df['K'] > 0, np.round(df['BB']/df['K'], 3), np.nan)
     
     #opposing on base percentage
+    @staticmethod
     def calc_obpa(df):
         return np.where(BasicPitching.calc_pab(df) > 0, np.round((df['H'] + df['BB'] + df['HBP']) / BasicPitching.calc_pab(df), 3), np.nan)
 
     #function to calculate all the summed stats
+    @staticmethod
     def pitchingSums(df):
         df['IP'] = BasicPitching.calc_ip(df)
         df['DECI'] = BasicPitching.calc_decisions(df)
@@ -260,6 +310,7 @@ class BasicPitching:
         return df
     
     #function to calculate all the ratio stats
+    @staticmethod
     def pitchingRatios(df):
 
         df['ERC'] = BasicPitching.calc_cera(df).round(4)
