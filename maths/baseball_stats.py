@@ -390,3 +390,5 @@ class BasicFielding:
         df['RF'] = BasicFielding.calc_rf(df)
         df['RF9'] = BasicFielding.calc_rf9(df)
         df['Sp'] = BasicFielding.calc_sp(df)
+        
+        return df
