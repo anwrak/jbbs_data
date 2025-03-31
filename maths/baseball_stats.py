@@ -226,10 +226,6 @@ class BasicPitching:
     def calc_r9(df):
         return np.where(df['IPO'] > 0, np.round(9 * (df['R'] / BasicPitching.calc_ip(df)), 3), np.nan)
     
-    #strikeouts per 9 innings
-    def calc_so9(df):
-        return np.where(df['IPO'] > 0, np.round(9 * (df['K'] / BasicPitching.calc_ip(df)), 3), np.nan)
-    
     #walks per 9 innings
     def calc_bb9(df):
         return np.where(df['IPO'] > 0, np.round(9 * (df['BB'] / BasicPitching.calc_ip(df)), 3), np.nan)
