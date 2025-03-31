@@ -245,13 +245,6 @@ class BasicPitching:
     def calc_bbk(df):
         return np.where(df['K'] > 0, np.round(df['BB']/df['K'], 3), np.nan)
     
+    #opposing on base percentage
     def calc_obpa(df):
         return np.where(BasicPitching.calc_pab(df) > 0, np.round((df['H'] + df['BB'] + df['HBP']) / BasicPitching.calc_pab(df), 3), np.nan)
-    
-    def calc_fip(df):
-        HRf = 13 * df['HR']
-        BBf = 3 * (df['BB'] + df['HBP'])
-        Kf = 2 * df['K']
-        A = HRf + BBf - Kf
-
-        return np.where(df['IPO'] > 0, np.round((A/BasicPitching.calc_ip(df)) + 3.1, 2), np.nan)
