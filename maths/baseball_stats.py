@@ -367,6 +367,11 @@ class BasicFielding:
     def calc_rf9(df):
         return np.where(df['IPO'] > 0, np.round(9 * (BasicFielding.calc_ca(df) / BasicFielding.calc_ip(df)), 3), np.nan)
 
+    #start percentage
+    @staticmethod
+    def calc_sp(df):
+        return np.where(df['G'] > 0, np.round(df['S'] / df['G'], 3), np.nan)
+
     #calculate sum fielding stats
     @staticmethod
     def fieldingSums(df):
@@ -384,3 +389,4 @@ class BasicFielding:
         df['Fp'] = BasicFielding.calc_fp(df)
         df['RF'] = BasicFielding.calc_rf(df)
         df['RF9'] = BasicFielding.calc_rf9(df)
+        df['Sp'] = BasicFielding.calc_sp(df)
