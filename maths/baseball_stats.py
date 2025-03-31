@@ -249,3 +249,27 @@ class BasicPitching:
     #opposing on base percentage
     def calc_obpa(df):
         return np.where(BasicPitching.calc_pab(df) > 0, np.round((df['H'] + df['BB'] + df['HBP']) / BasicPitching.calc_pab(df), 3), np.nan)
+
+def pitchingRatios(df):
+
+    df['ERC'] = BasicPitching.calc_cera(df).round(4)
+    df['DICE'] = BasicPitching.calc_dera(df).round(4)
+    df['ERA'] = BasicPitching.calc_era(df).round(4)
+    df['H9'] = BasicPitching.calc_h9(df).round(4)
+    df['HR9'] = BasicPitching.calc_hr9(df).round(4)
+    df['K9'] = BasicPitching.calc_k9(df).round(4)
+    df['KG'] = BasicPitching.calc_kg(df).round(4)
+    df['HRG'] = BasicPitching.calc_hrg(df).round(4)
+    df['RAG'] = BasicPitching.calc_rag(df).round(4)
+    df['OBA'] = BasicPitching.calc_oba(df).round(4)
+    df['BABIP'] = BasicPitching.calc_pbabip(df).round(4)
+    df['PFR'] = BasicPitching.calc_pfr(df).round(4)
+    df['R9'] = BasicPitching.calc_r9(df).round(4)
+    df['BB9'] = BasicPitching.calc_bb9(df).round(4)
+    df['BF9'] = BasicPitching.calc_bf9(df).round(4)
+    df['WHIP'] = BasicPitching.calc_whip(df).round(4)
+    df['WPCT'] = BasicPitching.calc_wp(df).round(4)
+    df['BBK'] = BasicPitching.calc_bbk(df).round(4)
+    df['OBPA'] = BasicPitching.calc_obpa(df).round(4)
+
+    return df
