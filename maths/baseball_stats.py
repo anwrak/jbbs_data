@@ -334,3 +334,53 @@ class BasicPitching:
         df['OBPA'] = BasicPitching.calc_obpa(df).round(4)
 
         return df
+    
+class BasicFielding:
+
+    #innings pitched
+    @staticmethod
+    def calc_ip(df):
+        return np.round(df['IPO'] / 3, 3)
+    
+    #total chances
+    @staticmethod
+    def calc_tc(df):
+        return df['PO'] + df['A'] + df['E']
+    
+    #chances accepted
+    @staticmethod
+    def calc_ca(df):
+        return df['PO'] + df['A']
+
+    #fielding percent
+    @staticmethod
+    def calc_fp(df):
+        return np.where(BasicFielding.calc_tc(df) > 0, np.round(BasicFielding.calc_ca(df) / BasicFielding.calc_tc(df), 3), np.nan)
+    
+    #range factor
+    @staticmethod
+    def calc_rf(df):
+        return np.where(df['G'] > 0, np.round(BasicFielding.calc_ca(df) / df['G'], 3), np.nan)
+    
+    #range factor per 9 innings
+    @staticmethod
+    def calc_rf9(df):
+        return np.where(df['IPO'] > 0, np.round(9 * (BasicFielding.calc_ca(df) / BasicFielding.calc_ip(df)), 3), np.nan)
+
+    #calculate sum fielding stats
+    @staticmethod
+    def fieldingSums(df):
+
+        df['IP'] = BasicFielding.calc_ip(df)
+        df['TC'] = BasicFielding.calc_tc(df)
+        df['CA'] = BasicFielding.calc_ca(df)
+
+        return df
+    
+    #calculate ratio and percentage fielding stats
+    @staticmethod
+    def fieldingRatios(df):
+
+        df['Fp'] = BasicFielding.calc_fp(df)
+        df['RF'] = BasicFielding.calc_rf(df)
+        df['RF9'] = BasicFielding.calc_rf9(df)
