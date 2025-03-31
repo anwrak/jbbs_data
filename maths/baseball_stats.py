@@ -170,7 +170,7 @@ class BasicPitching:
     #defense independant earned run average
     @staticmethod
     def calc_dera(df):
-        A = (13 * df['HR']) + (3 * (df['BB'] + df['HBP'])) - (2 * df['SO'])
+        A = (13 * df['HR']) + (3 * (df['BB'] + df['HBP'])) - (2 * df['K'])
         return np.where(df['IPO'] > 0, np.round(3 + (A / BasicPitching.calc_ip(df)), 3), np.nan)
 
     #earned run average
@@ -191,7 +191,7 @@ class BasicPitching:
     #strikeouts per nine innings
     @staticmethod
     def calc_k9(df):
-        return np.where(df['IPO']> 0, np.round(9 * (df['SO'] / BasicPitching.calc_ip(df)), 3), np.nan)
+        return np.where(df['IPO']> 0, np.round(9 * (df['K'] / BasicPitching.calc_ip(df)), 3), np.nan)
     
     #home runs per game
     @staticmethod
@@ -209,12 +209,12 @@ class BasicPitching:
     #opposing batting average on balls in play
     def calc_pbabip(df):
         A = df['H'] - df['HR']
-        B = BasicPitching.calc_pab(df) - df['SO'] - df['SF']
+        B = BasicPitching.calc_pab(df) - df['K'] - df['SF']
         return np.where(B > 0, np.round(A / B, 3), np.nan)
     
     #power finesse ration
     def calc_pfr(df):
-        A = df['SO'] + df['BB']
+        A = df['K'] + df['BB']
         return np.where(df['IPO'] > 0, np.round(A / BasicPitching.calc_ip(df), 3), np.nan)
 
     #runs per 9 innings
@@ -223,7 +223,7 @@ class BasicPitching:
     
     #strikeouts per 9 innings
     def calc_so9(df):
-        return np.where(df['IPO'] > 0, np.round(9 * (df['SO'] / BasicPitching.calc_ip(df)), 3), np.nan)
+        return np.where(df['IPO'] > 0, np.round(9 * (df['K'] / BasicPitching.calc_ip(df)), 3), np.nan)
     
     #walks per 9 innings
     def calc_bb9(df):
@@ -243,7 +243,7 @@ class BasicPitching:
     
     #walk to strikout ratio
     def calc_bbk(df):
-        return np.where(df['SO'] > 0, np.round(df['BB']/df['SO'], 3), np.nan)
+        return np.where(df['K'] > 0, np.round(df['BB']/df['K'], 3), np.nan)
     
     def calc_obpa(df):
         return np.where(BasicPitching.calc_pab(df) > 0, np.round((df['H'] + df['BB'] + df['HBP']) / BasicPitching.calc_pab(df), 3), np.nan)
