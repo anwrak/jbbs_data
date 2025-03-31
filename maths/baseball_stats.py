@@ -351,6 +351,11 @@ class BasicFielding:
     @staticmethod
     def calc_ca(df):
         return df['PO'] + df['A']
+    
+    #stolen base attempts
+    @staticmethod
+    def calc_sb_att(df):
+        return df['SBA'] + df['CCS']
 
     #fielding percent
     @staticmethod
@@ -370,7 +375,12 @@ class BasicFielding:
     #start percentage
     @staticmethod
     def calc_sp(df):
-        return np.where(df['G'] > 0, np.round(df['S'] / df['G'], 3), np.nan)
+        return np.where(df['G'] > 0, np.round(df['GS'] / df['G'], 3), np.nan)
+
+    #stolen base pct
+    @staticmethod
+    def calc_sbp(df):
+        return np.where(BasicFielding.calc_sb_att(df) > 0, np.round(df['CCS'] / BasicFielding.calc_sb_att(df), 3), np.nan)
 
     #calculate sum fielding stats
     @staticmethod
@@ -379,6 +389,7 @@ class BasicFielding:
         df['IP'] = BasicFielding.calc_ip(df)
         df['TC'] = BasicFielding.calc_tc(df)
         df['CA'] = BasicFielding.calc_ca(df)
+        df['SBAT'] = BasicFielding.calc_sb_att(df)
 
         return df
     
@@ -390,5 +401,6 @@ class BasicFielding:
         df['RF'] = BasicFielding.calc_rf(df)
         df['RF9'] = BasicFielding.calc_rf9(df)
         df['Sp'] = BasicFielding.calc_sp(df)
+        df['SBp'] = BasicFielding.calc_sbp(df)
         
         return df
