@@ -193,6 +193,11 @@ class BasicPitching:
     def calc_k9(df):
         return np.where(df['IPO']> 0, np.round(9 * (df['K'] / BasicPitching.calc_ip(df)), 3), np.nan)
     
+    #strikouts per game
+    @staticmethod
+    def calc_kg(df):
+        return np.where(df['G'] > 0, np.round(df['K'] / df['G'], 3), np.nan)
+    
     #home runs per game
     @staticmethod
     def calc_hrg(df):
