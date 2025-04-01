@@ -334,3 +334,73 @@ class BasicPitching:
         df['OBPA'] = BasicPitching.calc_obpa(df).round(4)
 
         return df
+    
+class BasicFielding:
+
+    #innings pitched
+    @staticmethod
+    def calc_ip(df):
+        return np.round(df['IPO'] / 3, 3)
+    
+    #total chances
+    @staticmethod
+    def calc_tc(df):
+        return df['PO'] + df['A'] + df['E']
+    
+    #chances accepted
+    @staticmethod
+    def calc_ca(df):
+        return df['PO'] + df['A']
+    
+    #stolen base attempts
+    @staticmethod
+    def calc_sb_att(df):
+        return df['SBA'] + df['CCS']
+
+    #fielding percent
+    @staticmethod
+    def calc_fp(df):
+        return np.where(BasicFielding.calc_tc(df) > 0, np.round(BasicFielding.calc_ca(df) / BasicFielding.calc_tc(df), 3), np.nan)
+    
+    #range factor
+    @staticmethod
+    def calc_rf(df):
+        return np.where(df['G'] > 0, np.round(BasicFielding.calc_ca(df) / df['G'], 3), np.nan)
+    
+    #range factor per 9 innings
+    @staticmethod
+    def calc_rf9(df):
+        return np.where(df['IPO'] > 0, np.round(9 * (BasicFielding.calc_ca(df) / BasicFielding.calc_ip(df)), 3), np.nan)
+
+    #start percentage
+    @staticmethod
+    def calc_gsp(df):
+        return np.where(df['G'] > 0, np.round(df['S'] / df['G'], 3), np.nan)
+
+    #stolen base pct
+    @staticmethod
+    def calc_sbp(df):
+        return np.where(BasicFielding.calc_sb_att(df) > 0, np.round(df['CCS'] / BasicFielding.calc_sb_att(df), 3), np.nan)
+
+    #calculate sum fielding stats
+    @staticmethod
+    def fieldingSums(df):
+
+        df['IP'] = BasicFielding.calc_ip(df)
+        df['TC'] = BasicFielding.calc_tc(df)
+        df['CA'] = BasicFielding.calc_ca(df)
+        df['SBAT'] = BasicFielding.calc_sb_att(df)
+
+        return df
+    
+    #calculate ratio and percentage fielding stats
+    @staticmethod
+    def fieldingRatios(df):
+
+        df['Fp'] = BasicFielding.calc_fp(df)
+        df['RF'] = BasicFielding.calc_rf(df)
+        df['RF9'] = BasicFielding.calc_rf9(df)
+        df['GSp'] = BasicFielding.calc_gsp(df)
+        df['SBp'] = BasicFielding.calc_sbp(df)
+        
+        return df
