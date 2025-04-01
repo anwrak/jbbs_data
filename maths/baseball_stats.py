@@ -375,7 +375,7 @@ class BasicFielding:
     #start percentage
     @staticmethod
     def calc_gsp(df):
-        return np.where(df['G'] > 0, np.round(df['GS'] / df['G'], 3), np.nan)
+        return np.where(df['G'] > 0, np.round(df['S'] / df['G'], 3), np.nan)
 
     #stolen base pct
     @staticmethod
